@@ -151,7 +151,7 @@ REST_USE_JWT = True  # Pour utiliser JSON Web Token
 
 ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Set to 'mandatory' if you want email verification
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_REQUIRED = True 
 
 
 MEDIA_URL = '/media/'
