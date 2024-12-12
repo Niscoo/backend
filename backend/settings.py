@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 import dj_database_url
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,14 +23,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY')
-'django-insecure-$5#fi=e9adoe3ioeg(qtxx*k*2$zi-mw=d*w1!ycp%5cm64&&@'
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'Frue').lower() == 'True'
+DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(" ") 
 
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='').split()
 # Application definition
 
 INSTALLED_APPS = [
@@ -96,7 +96,7 @@ DATABASES = {
     }
 }
 
-database_url = os.environ.get('DATABASE_URL') 
+database_url = config('DATABASE_URL') 
 DATABASES["default"] = dj_database_url.parse(database_url)
 
 
