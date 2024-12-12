@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 from pathlib import Path
-import django_heroku
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,13 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-$5#fi=e9adoe3ioeg(qtxx*k*2$zi-mw=d*w1!ycp%5cm64&&@'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+'django-insecure-$5#fi=e9adoe3ioeg(qtxx*k*2$zi-mw=d*w1!ycp%5cm64&&@'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'Frue').lower() == 'True'
 
-ALLOWED_HOSTS = ['*']  # For development purposes only; use CORS_ALLOWED_ORIGINS for specific origins
-
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(" ") 
 
 # Application definition
 
@@ -96,6 +96,9 @@ DATABASES = {
     }
 }
 
+database_url = os.environ.get('DATABASE_URL') 
+DATABASES["default"] = dj_database_url.parse(database_url)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -158,6 +161,3 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 CORS_ALLOW_ALL_ORIGINS = True  # For development purposes only; use CORS_ALLOWED_ORIGINS for specific origins
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
