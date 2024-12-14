@@ -21,7 +21,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend-production-6ee5.up.railway.app']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend-production-6ee5.up.railway.app', 'elmarchi-render-back.onrender.com']
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
