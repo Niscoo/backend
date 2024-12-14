@@ -21,7 +21,7 @@ SECRET_KEY = config('SECRET_KEY')
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend-production-6ee5.up.railway.app', 'elmarchi-render-back.onrender.com']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend-production-6ee5.up.railway.app']
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -142,6 +142,7 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 CSRF_TRUSTED_ORIGINS = [
     'https://backend-production-6ee5.up.railway.app',
     'https://elmarchi-front-git-main-niscoos-projects.vercel.app',
+    'localhost'
 ]
 
 CORS_ALLOWED_ORIGINS = [
