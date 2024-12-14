@@ -1,27 +1,28 @@
 import os
 from pathlib import Path
-import dj_database_url
 from decouple import config
+import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Récupération des variables d'environnement via decouple
+ENVIRONMENT = config('ENVIRONMENT', default='production')
+DATABASE_URL = config('DATABASE_URL')
+
+# Définir le mode DEBUG en fonction de l'environnement
+if ENVIRONMENT == 'development':
+    DEBUG = True
+else:
+    DEBUG = False
+
+# Base directory
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# Configuration des paramètres de base de Django
 SECRET_KEY = config('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost').split()  # Ajout de localhost pour le développement local
-# Vous pouvez aussi mettre ici les domaines autorisés comme "elmarchi-render-back.onrender.com"
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'backend-production-6ee5.up.railway.app']
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -74,10 +75,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+# Configuration de la base de données
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -85,13 +83,11 @@ DATABASES = {
     }
 }
 
-database_url = config('DATABASE_URL') 
-DATABASES["default"] = dj_database_url.parse(database_url)
+POSTGRES_LOCALLY = False
+if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
+    DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
+# Validation des mots de passe
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -107,51 +103,38 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-# Internationalization
-# https://docs.djangoproject.com/en/5.0/topics/i18n/
-
+# Paramètres de localisation
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
 
+# Configuration des fichiers statiques
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.0/howto/static-files/
-
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR / 'static')
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
+# Configuration de la clé primaire par défaut
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+# Authentification via Allauth
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
 
-REST_USE_JWT = True  # Pour utiliser JSON Web Token
+REST_USE_JWT = True
 
-
-ACCOUNT_EMAIL_VERIFICATION = 'optional'  # Set to 'mandatory' if you want email verification
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True 
+ACCOUNT_EMAIL_REQUIRED = True
 
-
+# Configuration des fichiers médias
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
-CORS_ALLOW_ALL_ORIGINS = True  # For development purposes only; use CORS_ALLOWED_ORIGINS for specific origins
+# CORS
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
-    'https://elmarchi-render-back.onrender.com',  # Ajouter votre domaine de production
-    'https://elmarchi-front-git-main-niscoos-projects.vercel.app',  # Frontend qui accède à l'API
+    'https://backend-production-6ee5.up.railway.app'
 ]
-
