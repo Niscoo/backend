@@ -9,9 +9,6 @@ class CustomUserDetailsSerializer(UserDetailsSerializer):
         model = User  
         fields = '__all__'
 
-
-
-
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
@@ -20,7 +17,14 @@ class CategorySerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = '__all__'  # Or explicitly list the fields you want to include
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        # If there's an image, ensure the full URL is returned
+        if instance.image:
+            representation['image'] = instance.image.url  # Add the full URL for the image
+        return representation
 
 class OrderSerializer(serializers.ModelSerializer):
     class Meta:
