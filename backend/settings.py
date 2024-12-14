@@ -147,7 +147,8 @@ CSRF_TRUSTED_ORIGINS = [
 
 CORS_ALLOWED_ORIGINS = [
     "https://elmarchi-front-git-main-niscoos-projects.vercel.app",  # URL de votre frontend
-    "https://elmarchi-front.vercel.app"
+    "https://elmarchi-front.vercel.app",
+    'localhost'
 ]
 
 CORS_ALLOW_CREDENTIALS = True
