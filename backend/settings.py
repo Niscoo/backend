@@ -53,6 +53,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+
+    # 'allauth.account.middleware.AccountMiddleware'
 ]
 
 SITE_ID = 1
@@ -138,5 +140,12 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 # CORS_ALLOW_ALL_ORIGINS = True
 # CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
-    'https://backend-production-6ee5.up.railway.app'
+    'https://backend-production-6ee5.up.railway.app',
+    'https://elmarchi-front-git-main-niscoos-projects.vercel.app',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://elmarchi-front-git-main-niscoos-projects.vercel.app",  # URL de votre frontend
+]
+
+CORS_ALLOW_CREDENTIALS = True
