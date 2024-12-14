@@ -83,9 +83,9 @@ DATABASES = {
     }
 }
 
-POSTGRES_LOCALLY = True
-if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
-    DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
+# POSTGRES_LOCALLY = True
+# if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
+#     DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
 # Validation des mots de passe
 AUTH_PASSWORD_VALIDATORS = [
