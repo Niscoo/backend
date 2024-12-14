@@ -73,7 +73,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'backend.wsgi.application'
+# WSGI_APPLICATION = 'backend.wsgi.application'
 
 # Configuration de la base de données
 DATABASES = {
@@ -83,7 +83,7 @@ DATABASES = {
     }
 }
 
-POSTGRES_LOCALLY = False
+POSTGRES_LOCALLY = True
 if ENVIRONMENT == 'production' or POSTGRES_LOCALLY:
     DATABASES['default'] = dj_database_url.parse(config('DATABASE_URL'))
 
@@ -133,8 +133,8 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 # CORS
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOW_CREDENTIALS = True
 CSRF_TRUSTED_ORIGINS = [
     'https://backend-production-6ee5.up.railway.app'
 ]
